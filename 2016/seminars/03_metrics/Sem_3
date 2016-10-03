@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "cells": [
+    {
+      "type": "cs",
+      "input": "getModel \"glm-0f721680-f4b7-4f7a-a6b6-9b6ed046a99f\""
+    }
+  ]
+}

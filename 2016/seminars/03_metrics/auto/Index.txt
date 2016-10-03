@@ -1,0 +1,6 @@
+Index of autos
+
+02 Dec 1996      144 Index
+24 Sep 1991     4747 imports-85.names
+21 Nov 1990     3757 misc
+30 May 1989    25936 imports-85.data
