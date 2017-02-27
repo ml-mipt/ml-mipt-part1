@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="500"
+   height="500"
+   viewBox="0 0 500 500"
+   preserveAspectRatio="none"
+   version="1.1"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="Economics_Gini_coefficient.svg"
+   sodipodi:docbase="/home/ben/Desktop"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <metadata
+     id="metadata31">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs29">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 250 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="500 : 250 : 1"
+       inkscape:persp3d-origin="250 : 166.66667 : 1"
+       id="perspective18" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:cy="225.50055"
+     inkscape:cx="247.71921"
+     inkscape:zoom="0.86831673"
+     inkscape:window-height="831"
+     inkscape:window-width="1440"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:current-layer="svg2"
+     showgrid="false" />
+  <style
+     id="style4">
+text {
+	font-family : Verdana, Tahoma, sans-serif;
+	font-size : 15px;
+	fill : black;
+	stroke : none;
+}
+</style>
+  <desc
+     id="desc6">Gini Coefficient in Economics</desc>
+<!-- Curve -->  <path
+     d="M50 450 L 450 50 A400 400 0 0 1 50 450 Z"
+     style="stroke:black;stroke-width:2;fill:#b0c4d6;fill-opacity:1"
+     id="path8" />
+<!-- Axes -->  <path
+     d="M 50,450 L 450,450 L 435.16866,445.37913 L 440,450 L 435,455.19669 L 450,450 L 50,450 z "
+     style="stroke:black;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+     id="path10"
+     sodipodi:nodetypes="ccccccc" />
+  <path
+     transform="rotate(-90) translate(-500,0)"
+     d="M 50,450 L 450,450 L 434.89821,443.72151 L 440,450 L 434.59283,456.17669 L 450,450 L 50,450 z "
+     style="stroke:black;stroke-width:2;"
+     id="path12"
+     sodipodi:nodetypes="ccccccc" />
+<!-- Axes Labels -->  <text
+     x="248.84834"
+     y="489.9715"
+     id="text14"
+     style="font-size:15px;text-anchor:middle;fill:#000000;stroke:none;font-family:'Verdana, Tahoma, sans-serif'">Cumulative share of people from lowest to highest incomes</text>
+  <text
+     x="440.21094"
+     y="468.09009"
+     id="text16"
+     style="font-size:15px;text-anchor:middle;fill:#000000;stroke:none;font-family:'Verdana, Tahoma, sans-serif'">100%</text>
+  <text
+     x="250"
+     y="475"
+     text-anchor="middle"
+     transform="rotate(-90) translate(-500,0)"
+     id="text18">Cumulative share of income earned</text>
+  <text
+     x="450"
+     y="475"
+     text-anchor="middle"
+     transform="rotate(-90) translate(-500,0)"
+     id="text20">100%</text>
+<!-- Other Labels -->  <text
+     x="0"
+     y="0"
+     transform="matrix(0.7071068,-0.7071068,0.7071068,0.7071068,243.95184,243.95184)"
+     id="text24"
+     style="font-size:15px;text-anchor:middle;fill:#000000;stroke:none;font-family:'Verdana, Tahoma, sans-serif'">Line of Equality (45 Degree)</text>
+  <text
+     xml:space="preserve"
+     style="font-size:22px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial Bold"
+     x="379.34595"
+     y="171.24756"
+     id="text2397"
+     sodipodi:linespacing="100%"><tspan
+       sodipodi:role="line"
+       id="tspan2399"
+       x="379.34595"
+       y="171.24756"><tspan
+         x="379.34595"
+         y="171.24756"
+         id="tspan2401">A</tspan></tspan></text>
+  <path
+     style="opacity:1;fill:#80b3ff;fill-opacity:1;stroke:#0000e8;stroke-width:0.40717101;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 104.09244,447.76975 C 111.30125,446.82027 131.49046,443.05155 140.70628,440.93506 C 192.63167,429.01 242.05884,406.46716 285.62043,374.84233 C 319.68933,350.10904 351.93027,317.72177 376.21321,283.83848 C 398.85575,252.24403 417.48113,215.97823 429.95571,179.19554 C 438.23,154.79778 444.22022,129.41259 447.69501,104.01974 C 448.614,97.304497 448.78859,122.28779 448.87027,272.16815 L 448.96628,448.20365 L 442.35049,446.17193 C 437.79685,444.77347 435.47239,444.40254 434.89307,444.98186 C 434.31375,445.56116 434.37637,446.21501 435.09381,447.07954 C 436.03266,448.21071 419.51267,448.32344 268.89279,448.21356 C 176.90892,448.14645 102.74878,447.94674 104.09244,447.76976 L 104.09244,447.76975 z"
+     id="path2414" />
+  <path
+     style="opacity:1;fill:#80b3ff;fill-opacity:1;stroke:#0000e8;stroke-width:0.14395669;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 448.53469,109.52335 C 448.46876,105.21705 448.33048,103.10309 448.09623,102.82123 C 447.83051,102.50149 447.87166,101.44655 448.28038,98.098944 L 448.80668,93.788374 L 448.83847,104.80106 C 448.85595,110.85804 448.81642,115.81375 448.75063,115.81375 C 448.68484,115.81375 448.58767,112.98307 448.53469,109.52335 z"
+     id="path2416" />
+  <text
+     id="text22"
+     style="font-size:15px;text-anchor:middle;fill:#000000;stroke:none;font-family:'Verdana, Tahoma, sans-serif'"
+     y="449.23141"
+     x="26.767477"
+     transform="matrix(0.7071068,-0.7071068,0.7071068,0.7071068,0,0)">Lorenz Curve</text>
+  <text
+     xml:space="preserve"
+     style="font-size:22px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial Bold"
+     x="387.55939"
+     y="380.15622"
+     id="text2403"
+     sodipodi:linespacing="100%"><tspan
+       sodipodi:role="line"
+       id="tspan2405"
+       x="387.55939"
+       y="380.15622"><tspan
+         x="387.55939"
+         y="380.15622"
+         id="tspan2407">B</tspan></tspan></text>
+  <path
+     style="opacity:1;fill:#b3ff80;fill-opacity:1;stroke:#0000e8;stroke-width:0.20358551;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 98.246737,448.32096 C 100.72094,448.01077 106.20971,447.94751 115.14433,448.12622 C 134.32594,448.50989 418.87932,448.47408 428.05525,448.08684 C 434.39376,447.81935 435.89923,447.86146 436.38771,448.31992 C 436.89346,448.79459 411.01477,448.87195 265.78307,448.82992 C 136.57581,448.79253 95.481068,448.66769 98.246737,448.32096 L 98.246737,448.32096 z"
+     id="path2397" />
+</svg>
