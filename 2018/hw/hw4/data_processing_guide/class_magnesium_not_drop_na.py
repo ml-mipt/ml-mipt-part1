@@ -17,6 +17,7 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, roc_auc_score
 from sklearn.metrics import roc_curve, precision_recall_curve, average_precision_score, f1_score
 
+import ipywidgets
 try:
     from tqdm import tnrange, tqdm_notebook
     tqdm = True
@@ -232,29 +233,47 @@ class Magnesium(object):
            (по дефолту она берется из класса, но можно передать и извне в параметре model) на данных x, y;
            Оценить качество предсказания и построить графики. 
            Вовзращает словарь, аналогичный fit_predict.
+           И по умолчанию рисует графики метрик качества, аналогичные fit_predict.
+           
+           Ecли y == None, все оценки качества и графики имеют значения None.
         '''
         if file_ is not None:
-            data = np.matrix(pd.read_table(file_).fillna(method = 'backfill', axis = 1))   
-            x = data[:, 1:-1] 
-            y = np.array(data[:,-1].flatten().tolist()[0])
+            data = pd.read_table(file_, sep=',').dropna()   
+    
+            data = data[~(data['chainlen']>1000)]
+
+            if ('DSSR' in data.columns):
+                data.drop('DSSR', axis=1, inplace=True)    
+
+            features = list(deepcopy(data.columns))
+            [features.remove(column) for column in ['Id','index', 'pdb_chain', 'mg'] if column in data.columns];
+            x = np.array(data[features])
+            try:
+                y = np.array(data['mg'])
+            except: 
+                y = None
         trained_model = self.trained_model if model is None else model
-        y_prob = trained_model.predict_proba(x)[:, 1]
-        treshold, prob_dens = self.plot_probability_density(y_prob, y)
+        y_prob = trained_model.predict_proba(x)[:, 1]        
         y_pred = trained_model.predict(x)
-    #    y_pred = [1 if i>=treshold else 0 for i in y_prob]
-        test_score = f1_score(y, y_pred)
-        test_roc_auc_score = roc_auc_score(y, y_prob)
-        fpr, tpr, _ = roc_curve(y, y_prob)        
-        roc_auc_plot = [self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[0], alpha=0.5, label = '')]
-        roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
-        pr = self.prec_recall(y, y_prob, plots) 
-        cnf = self.plot_confusion_matrix(y, y_pred, plots)
-        
+        if y is not None:
+            treshold, prob_dens = self.plot_probability_density(y_prob, y)
+        #    y_pred = [1 if i>=treshold else 0 for i in y_prob]
+            test_score = f1_score(y, y_pred)
+            test_roc_auc_score = roc_auc_score(y, y_prob)
+            fpr, tpr, _ = roc_curve(y, y_prob)        
+            roc_auc_plot = [self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[0], alpha=0.5, label = '')]
+            roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
+            pr = self.prec_recall(y, y_prob, plots) 
+            cnf = self.plot_confusion_matrix(y, y_pred, plots)
+        else:
+            treshold, prob_dens, test_score, test_roc_auc_score, fpr, tpr, roc_auc_plot  = [None,]*7
+            pr, cnf = [[None]*4]*2
+
         data = {'x': x, 'y': y, 'probability': y_prob, 'prediction': y_pred, 'treshold': treshold, 
                 'test_score':test_score, 'roc_auc':[fpr, tpr], 'prec_rec':pr[:-1], 'confusion': cnf, 
                 'plots':{'roc_auc': roc_auc_plot, 'prec_recall': pr[3],
                          'cnf_normed': cnf[3], 'cnf': cnf[2], 'prob_density': prob_dens}}
-        if plots:
+        if plots and y is not None:
             self.show_plots(data['plots'])    
         return data
   
@@ -391,3 +410,4 @@ class Magnesium(object):
     
 def plot_one_plot(plot_elements):
     [eval(plot_string) for plot_string in plot_elements]
+    
