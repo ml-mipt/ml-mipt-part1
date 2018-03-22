@@ -17,7 +17,6 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, roc_auc_score
 from sklearn.metrics import roc_curve, precision_recall_curve, average_precision_score, f1_score
 
-import ipywidgets
 try:
     from tqdm import tnrange, tqdm_notebook
     tqdm = True
@@ -178,36 +177,36 @@ class Magnesium(object):
             fpr_tprs.append(roc_curve(y_test, y_prob))
             fpr, tpr, _ = fpr_tprs[-1]
             
-            prec_recalls.append(self.prec_recall(y_test, y_prob, plots))
-            cnfs.append(self.plot_confusion_matrix(y_test, y_pred, plots))
+            prec_recalls.append(self.prec_recall(y_test, y_prob, True))
+            cnfs.append(self.plot_confusion_matrix(y_test, y_pred, True))
             prob_dens_info.append(self.plot_probability_density())
             
-            if plots:
-                self.roc_auc_plot.append(self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[1], alpha=0.5))
+            self.roc_auc_plot.append(self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[1], alpha=0.5))
         self.y_data = [y_prob, test_index]
 #        print('Portion of sites in test: ', np.sum(y_test == 1)/y_test.shape[0])
 #        print('Portion of sites in train: ', np.sum(y_train == 1)/y_train.shape[0])
-        if plots:
-            self.roc_auc_plot.append(self.form_plot_string('plt.legend', loc = 4, fontsize = 12))
-            self.roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
-            
-            plot_splits = [plot_splits] if (type(plot_splits) == int) else plot_splits
-            for i in plot_splits:
-                fpr, tpr, _ = fpr_tprs[i]
-                i = i-2 if i < 0 else i
-                self.roc_auc_plot[i] = self.form_plot_string('plt.plot', fpr, tpr, 
-                                       color = random.choice(list(mcolors.CSS4_COLORS.keys())), alpha=0.5, 
-                                       label = 'Split %d'%i)
-            self.show_plots({'roc_auc':self.roc_auc_plot})
-            
-            
+ 
+        self.roc_auc_plot.append(self.form_plot_string('plt.legend', loc = 4, fontsize = 12))
+        self.roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
+
+        plot_splits = [plot_splits] if (type(plot_splits) == int) else plot_splits
+        for i in plot_splits:
+            fpr, tpr, _ = fpr_tprs[i]
+            i = i-2 if i < 0 else i
+            self.roc_auc_plot[i] = self.form_plot_string('plt.plot', fpr, tpr, 
+                                   color = random.choice(list(mcolors.CSS4_COLORS.keys())), alpha=0.5, 
+                                   label = 'Split %d'%i)       
+
+
         data = {'test score': self.test_score, 'train score':self.train_score, #'treshold':treshold, 
                 'roc_auc':fpr_tprs, 'prec_rec':prec_recalls, 'confusion': cnfs,
                'plots':{'roc_auc': self.roc_auc_plot, 'prec_recall': [i[3] for i in prec_recalls],
                          'cnf_normed': [i[3] for i in cnfs], 'cnf': [i[2] for i in cnfs], 
                          'prob_density': [i[1] for i in prob_dens_info]}}
+   
         
         if plots:
+            self.show_plots({'roc_auc':self.roc_auc_plot})
             for i in plot_splits:
                 data_to_plot = data['plots']
                 data_to_plot = {key:value[i] if key != 'roc_auc' else value for key,value in data_to_plot.items()}
@@ -410,4 +409,3 @@ class Magnesium(object):
     
 def plot_one_plot(plot_elements):
     [eval(plot_string) for plot_string in plot_elements]
-    
