@@ -177,36 +177,36 @@ class Magnesium(object):
             fpr_tprs.append(roc_curve(y_test, y_prob))
             fpr, tpr, _ = fpr_tprs[-1]
             
-            prec_recalls.append(self.prec_recall(y_test, y_prob, plots))
-            cnfs.append(self.plot_confusion_matrix(y_test, y_pred, plots))
+            prec_recalls.append(self.prec_recall(y_test, y_prob, True))
+            cnfs.append(self.plot_confusion_matrix(y_test, y_pred, True))
             prob_dens_info.append(self.plot_probability_density())
             
-            if plots:
-                self.roc_auc_plot.append(self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[1], alpha=0.5))
+            self.roc_auc_plot.append(self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[1], alpha=0.5))
         self.y_data = [y_prob, test_index]
 #        print('Portion of sites in test: ', np.sum(y_test == 1)/y_test.shape[0])
 #        print('Portion of sites in train: ', np.sum(y_train == 1)/y_train.shape[0])
-        if plots:
-            self.roc_auc_plot.append(self.form_plot_string('plt.legend', loc = 4, fontsize = 12))
-            self.roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
-            
-            plot_splits = [plot_splits] if (type(plot_splits) == int) else plot_splits
-            for i in plot_splits:
-                fpr, tpr, _ = fpr_tprs[i]
-                i = i-2 if i < 0 else i
-                self.roc_auc_plot[i] = self.form_plot_string('plt.plot', fpr, tpr, 
-                                       color = random.choice(list(mcolors.CSS4_COLORS.keys())), alpha=0.5, 
-                                       label = 'Split %d'%i)
-            self.show_plots({'roc_auc':self.roc_auc_plot})
-            
-            
+ 
+        self.roc_auc_plot.append(self.form_plot_string('plt.legend', loc = 4, fontsize = 12))
+        self.roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
+
+        plot_splits = [plot_splits] if (type(plot_splits) == int) else plot_splits
+        for i in plot_splits:
+            fpr, tpr, _ = fpr_tprs[i]
+            i = i-2 if i < 0 else i
+            self.roc_auc_plot[i] = self.form_plot_string('plt.plot', fpr, tpr, 
+                                   color = random.choice(list(mcolors.CSS4_COLORS.keys())), alpha=0.5, 
+                                   label = 'Split %d'%i)       
+
+
         data = {'test score': self.test_score, 'train score':self.train_score, #'treshold':treshold, 
                 'roc_auc':fpr_tprs, 'prec_rec':prec_recalls, 'confusion': cnfs,
                'plots':{'roc_auc': self.roc_auc_plot, 'prec_recall': [i[3] for i in prec_recalls],
                          'cnf_normed': [i[3] for i in cnfs], 'cnf': [i[2] for i in cnfs], 
                          'prob_density': [i[1] for i in prob_dens_info]}}
+   
         
         if plots:
+            self.show_plots({'roc_auc':self.roc_auc_plot})
             for i in plot_splits:
                 data_to_plot = data['plots']
                 data_to_plot = {key:value[i] if key != 'roc_auc' else value for key,value in data_to_plot.items()}
@@ -232,29 +232,47 @@ class Magnesium(object):
            (по дефолту она берется из класса, но можно передать и извне в параметре model) на данных x, y;
            Оценить качество предсказания и построить графики. 
            Вовзращает словарь, аналогичный fit_predict.
+           И по умолчанию рисует графики метрик качества, аналогичные fit_predict.
+           
+           Ecли y == None, все оценки качества и графики имеют значения None.
         '''
         if file_ is not None:
-            data = np.matrix(pd.read_table(file_).fillna(method = 'backfill', axis = 1))   
-            x = data[:, 1:-1] 
-            y = np.array(data[:,-1].flatten().tolist()[0])
+            data = pd.read_table(file_, sep=',').dropna()   
+    
+            data = data[~(data['chainlen']>1000)]
+
+            if ('DSSR' in data.columns):
+                data.drop('DSSR', axis=1, inplace=True)    
+
+            features = list(deepcopy(data.columns))
+            [features.remove(column) for column in ['Id','index', 'pdb_chain', 'mg'] if column in data.columns];
+            x = np.array(data[features])
+            try:
+                y = np.array(data['mg'])
+            except: 
+                y = None
         trained_model = self.trained_model if model is None else model
-        y_prob = trained_model.predict_proba(x)[:, 1]
-        treshold, prob_dens = self.plot_probability_density(y_prob, y)
+        y_prob = trained_model.predict_proba(x)[:, 1]        
         y_pred = trained_model.predict(x)
-    #    y_pred = [1 if i>=treshold else 0 for i in y_prob]
-        test_score = f1_score(y, y_pred)
-        test_roc_auc_score = roc_auc_score(y, y_prob)
-        fpr, tpr, _ = roc_curve(y, y_prob)        
-        roc_auc_plot = [self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[0], alpha=0.5, label = '')]
-        roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
-        pr = self.prec_recall(y, y_prob, plots) 
-        cnf = self.plot_confusion_matrix(y, y_pred, plots)
-        
+        if y is not None:
+            treshold, prob_dens = self.plot_probability_density(y_prob, y)
+        #    y_pred = [1 if i>=treshold else 0 for i in y_prob]
+            test_score = f1_score(y, y_pred)
+            test_roc_auc_score = roc_auc_score(y, y_prob)
+            fpr, tpr, _ = roc_curve(y, y_prob)        
+            roc_auc_plot = [self.form_plot_string('plt.plot', fpr, tpr, color = self.colours[0], alpha=0.5, label = '')]
+            roc_auc_plot.append(self.form_plot_string('plt.title', self.model_name + ". ROC curves."))
+            pr = self.prec_recall(y, y_prob, plots) 
+            cnf = self.plot_confusion_matrix(y, y_pred, plots)
+        else:
+            treshold, prob_dens, test_score, test_roc_auc_score, fpr, tpr, roc_auc_plot  = [None,]*7
+            pr, cnf = [[None]*4]*2
+
         data = {'x': x, 'y': y, 'probability': y_prob, 'prediction': y_pred, 'treshold': treshold, 
                 'test_score':test_score, 'roc_auc':[fpr, tpr], 'prec_rec':pr[:-1], 'confusion': cnf, 
                 'plots':{'roc_auc': roc_auc_plot, 'prec_recall': pr[3],
                          'cnf_normed': cnf[3], 'cnf': cnf[2], 'prob_density': prob_dens}}
-        if plots:
+        if plots and y is not None:
             self.show_plots(data['plots'])    
         return data
   
