@@ -1,5 +1,7 @@
-<Deprecated>
+
+# Deprecated
   
 # ml-mipt-part1
 Материалы запусков курса машинного обучения на ФИВТе 20..-2018 годов
+
 Материалы запуска 2019 доступны по ссылке: https://github.com/ml-mipt/ml-mipt
